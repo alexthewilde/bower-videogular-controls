@@ -28,8 +28,11 @@
 angular.module("com.2fdevs.videogular.plugins.controls", [])
     .run(
     ["$templateCache", function ($templateCache) {
+        // NB ng-mousemove hits performance
+        // $templateCache.put("vg-templates/vg-controls",
+            // '<div class="controls-container" ng-mousemove="onMouseMove()" ng-class="animationClass" ng-transclude></div>');
         $templateCache.put("vg-templates/vg-controls",
-            '<div class="controls-container" ng-mousemove="onMouseMove()" ng-class="animationClass" ng-transclude></div>');
+            '<div class="controls-container" ng-class="animationClass" ng-transclude></div>');
     }]
 )
     .directive("vgControls",
@@ -966,11 +969,11 @@ angular.module("com.2fdevs.videogular.plugins.controls")
                     scope.onDestroy = function() {
                         elem.unbind("touchstart", scope.onScrubBarTouchStart);
                         elem.unbind("touchend", scope.onScrubBarTouchEnd);
-                        elem.unbind("touchmove", scope.onScrubBarTouchMove);
+                        // elem.unbind("touchmove", scope.onScrubBarTouchMove);
                         elem.unbind("touchleave", scope.onScrubBarTouchLeave);
                         elem.unbind("mousedown", scope.onScrubBarMouseDown);
                         elem.unbind("mouseup", scope.onScrubBarMouseUp);
-                        elem.unbind("mousemove", scope.onScrubBarMouseMove);
+                        // elem.unbind("mousemove", scope.onScrubBarMouseMove);
                         elem.unbind("mouseleave", scope.onScrubBarMouseLeave);
                     };
 
@@ -995,13 +998,15 @@ angular.module("com.2fdevs.videogular.plugins.controls")
                     if (VG_UTILS.isMobileDevice()) {
                         elem.bind("touchstart", scope.onScrubBarTouchStart);
                         elem.bind("touchend", scope.onScrubBarTouchEnd);
-                        elem.bind("touchmove", scope.onScrubBarTouchMove);
+                        // NB removed for better performance
+                        // elem.bind("touchmove", scope.onScrubBarTouchMove);
                         elem.bind("touchleave", scope.onScrubBarTouchLeave);
                     }
                     else {
                         elem.bind("mousedown", scope.onScrubBarMouseDown);
                         elem.bind("mouseup", scope.onScrubBarMouseUp);
-                        elem.bind("mousemove", scope.onScrubBarMouseMove);
+                        // NB removed for better performance
+                        // elem.bind("mousemove", scope.onScrubBarMouseMove);
                         elem.bind("mouseleave", scope.onScrubBarMouseLeave);
                     }
 
